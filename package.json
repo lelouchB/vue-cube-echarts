@@ -8,8 +8,12 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@cubejs-client/core": "^0.29.8",
+    "@cubejs-client/vue3": "^0.29.8",
     "core-js": "^3.6.5",
-    "vue": "^3.0.0"
+    "echarts": "^5.2.2",
+    "vue": "^3.0.0",
+    "vue-echarts": "^6.0.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
