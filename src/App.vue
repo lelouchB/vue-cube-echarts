@@ -1,3 +1,4 @@
+
 <template>
   <h1>Vue Cube.js Echarts</h1>
   <div class="dashboard">
@@ -79,6 +80,7 @@ export default {
   components: {
     QueryBuilder,
     Card,
+    // eslint-disable-next-line vue/no-unused-components
     OrderCard,
     Table,
     PieChart,
