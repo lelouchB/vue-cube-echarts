@@ -1,6 +1,6 @@
 
 <template>
-  <h1>Vue Cube.js Echarts</h1>
+  <h1>Vue Cube.js ECharts</h1>
   <div class="dashboard">
     <div class="cards-container">
       <query-builder :cubejs-api="cubejsApi" :query="totalPaintingsQuery">
