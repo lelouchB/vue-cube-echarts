@@ -4,7 +4,7 @@
       <div class="col-1">Artist</div>
       <div class="col-2">Number of Paintings</div>
     </div>
-    <div class="table-body" v-for="(item, index) in items.data" :key="index">
+    <div class="table-body" v-for="(item, index) in items" :key="index">
       <span class="col-1">
         {{ item[0] }}
       </span>
@@ -20,20 +20,12 @@ export default {
   name: "Table",
   props: {
     resultSet: Object,
-    loading: Boolean,
   },
   computed: {
     items: function () {
-      if (this.loading) return [];
-      if (this.resultSet !== undefined) {
-        return {
-          data: this.resultSet
-            .rawData()
-            .map((item) => Object.values(item).map((value) => `${value}`)),
-        };
-      } else {
-        return [];
-      }
+      return this.resultSet
+        .rawData()
+        .map((item) => Object.values(item).map((value) => `${value}`));
     },
   },
 };
