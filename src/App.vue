@@ -10,15 +10,14 @@
           </div>
         </template>
       </query-builder>
-
-      <query-builder :cubejs-api="cubejsApi" :query="orderStatusQuery">
+      <!-- <query-builder :cubejs-api="cubejsApi" :query="orderStatusQuery">
         <template v-slot="{ loading, resultSet }">
           <div v-if="loading" class="loading">Loading...</div>
           <div v-if="!loading && resultSet !== undefined">
             <OrderCard :resultSet="resultSet" title="Order Status" />
           </div>
         </template>
-      </query-builder>
+      </query-builder> -->
     </div>
     <div class="table-container">
       <query-builder :cubejs-api="cubejsApi" :query="artistQuery">
@@ -47,7 +46,6 @@
         </div>
       </template>
     </query-builder>
-
     <query-builder :cubejs-api="cubejsApi" :query="paintingsByNationalityQuery">
       <template v-slot="{ loading, resultSet }">
         <div v-if="loading" class="loading">Loading...</div>
@@ -66,18 +64,15 @@
 <script>
 import cubejs from "@cubejs-client/core";
 import { QueryBuilder } from "@cubejs-client/vue3";
-import Table from "./components/Table";
 import Card from "./components/Card";
 import OrderCard from "./components/OrderCard";
+import Table from "./components/Table";
 import PieChart from "./components/PieChart";
 import BarChart from "./components/BarChart";
 
-const cubejsApi = cubejs(
-  "1bea38a48b6e92af20a7026bdb29893ce6fadb1d76edad085121f326acb7ccf0c5077ff7242af7cf8f7afc0ba5420bcb464e384c4721aeb94d54e05ed1975f30",
-  {
-    apiUrl: "http://localhost:4000/cubejs-api/v1",
-  }
-);
+const cubejsApi = cubejs(process.env.VUE_APP_CUBE_API_KEY, {
+  apiUrl: process.env.VUE_APP_CUBE_API_URL,
+});
 
 export default {
   name: "App",
@@ -128,13 +123,13 @@ export default {
           },
         ],
       },
-      paintingsByNationalityQuery: {
+      paintingsByClassificationQuery: {
         measures: ["Artworks.count"],
-        dimensions: ["Artworks.nationality"],
         timeDimensions: [],
         order: {
-          "Artworks.dateacquired": "asc",
+          "Artworks.count": "desc",
         },
+        dimensions: ["Artworks.classification"],
         filters: [
           {
             member: "Artworks.count",
@@ -143,13 +138,13 @@ export default {
           },
         ],
       },
-      paintingsByClassificationQuery: {
+      paintingsByNationalityQuery: {
         measures: ["Artworks.count"],
+        dimensions: ["Artworks.nationality"],
         timeDimensions: [],
         order: {
-          "Artworks.count": "desc",
+          "Artworks.dateacquired": "asc",
         },
-        dimensions: ["Artworks.classification"],
         filters: [
           {
             member: "Artworks.count",
@@ -173,18 +168,12 @@ export default {
   padding: 0 3rem;
   margin-top: 30px;
 }
-.dashboard{
+.dashboard {
   display: flex;
   justify-content: space-evenly;
   gap: 1rem;
   flex-wrap: wrap;
   align-items: center;
-}
-.charts-section{
-  margin-top: 20px;
-  display: flex;
-  gap: 1rem;
-  flex-direction: column;
 }
 .cards-container {
   display: flex;
@@ -193,9 +182,6 @@ export default {
   gap: 1rem;
   flex-wrap: wrap;
   align-items: center;
-}
-.table-container {
-  height: 100%;
 }
 .card-wrapper {
   display: flex;
